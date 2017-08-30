@@ -9,4 +9,6 @@
     <flow id="sporty" type="sporty car" begin="0" end="5000" number="300" from="E5" to="NE3" departPos="last" departLane="best" />
     <flow id="coach" type="coach" begin="0" end="5000" number="300" from="E0" to="NE4" departPos="last" departLane="best" />
     <flow id="trailer" type="trailer" begin="0" end="5000" number="700" from="E5" to="NE3" departPos="last" departLane="best" />
+
+    <vehicle id="Auto" type="trailer" depart="triggered" route="E0"/>
 </routes>

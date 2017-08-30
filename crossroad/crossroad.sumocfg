@@ -2,5 +2,6 @@
     <input>
        <net-file value="crossroad.net.xml"/>
        <route-files value="crossroad.rou.xml"/>
+       <remote-port value="8813"/>
     </input>
 </configuration>
