@@ -1,18 +1,8 @@
 <routes>
-    <vType id="normal car" vClass="passenger" maxSpeed="40" speedFactor="0.9" speedDev="0.2" sigma="0.5" />
-    <vType id="sporty car" vClass="passenger" maxSpeed="60" speedFactor="1.3" speedDev="0.1" sigma="0.1" />
-    <vType id="trailer" vClass="trailer"  maxSpeed="30" speedFactor="1.1" speedDev="0.1" color="0,1,0" />
-    <vType id="coach" vClass="coach"  maxSpeed="30" speedFactor="1." speedDev="0.1" />
-
-
-    <flow id="normal" type="normal car" begin="0" end="5000" number="5000" from="E0" to="NE4" departPos="last" departLane="best" />
-    <flow id="sporty" type="sporty car" begin="0" end="5000" number="300" from="E5" to="NE3" departPos="last" departLane="best" />
-    <flow id="coach" type="coach" begin="0" end="5000" number="300" from="E0" to="NE4" departPos="last" departLane="best" />
-    <flow id="trailer" type="trailer" begin="0" end="5000" number="700" from="E5" to="NE3" departPos="last" departLane="best" />
-
-    <route id="auto route" edges="gneE3 -gneE0"/>
-    <vehicle id="Auto" type="trailer" depart="0" route="auto route" departLane="best" departPos="random" arrivalLane="current" arrivalPos="random" color="0,1,0"/>
-
-
-
+        <vType id="normal" vClass="passenger" maxSpeed="40" speedFactor="0.9" speedDev="0.2" sigma="0.5" />
+        <vType id="sporty" vClass="passenger" maxSpeed="60" speedFactor="1.3" speedDev="0.1" sigma="0.1" />
+        <vType id="trailer" vClass="trailer"  maxSpeed="30" speedFactor="1.1" speedDev="0.1" color="0,1,0" />
+    
+        <route id="left-right" edges="E0 NE4" />
+        <route id="cross" edges="gneE3 -gneE0" />
 </routes>
