@@ -34,4 +34,5 @@ class DQN_for_CROSS:
         model.add(Dense(100,activation='relu'))
         model.add(Dense(12,activation='linear'))
         model.compile(loss='mse',optimizer = optimizers.RMSprop(lr=self.learning_rate))
-        self.model=model
+        
+
