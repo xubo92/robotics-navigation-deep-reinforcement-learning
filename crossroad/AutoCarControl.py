@@ -41,7 +41,7 @@ def generate_routefile(vehicle_domain):
 
 
 PORT = 8813
-sumoBinary = "/usr/bin/sumo-gui"
+sumoBinary = "/usr/local/bin/sumo-gui"
 sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"], stdout=sys.stdout, stderr=sys.stderr)
 
 
