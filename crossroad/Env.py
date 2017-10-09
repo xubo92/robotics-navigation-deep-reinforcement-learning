@@ -165,7 +165,7 @@ class Intersaction:
         return True
 
 
-'''
+
 def generate_flow(vehicle_domain):
     random.seed(42)  # make tests reproducible
     N = 10000  # number of time steps
@@ -198,8 +198,9 @@ def generate_flow(vehicle_domain):
 
 
 PORT = 8813
-sumoBinary = "/usr/bin/sumo-gui"
-sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"], stdout=sys.stdout, stderr=sys.stderr)
+sumoBinary = "/usr/local/bin/sumo-gui"  # on Mac
+#sumoBinary = "/usr/bin/sumo-gui"  # on linux
+sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
 
@@ -210,15 +211,21 @@ traci.init(PORT)
 generate_flow(vd)
 
 step = 0
+'''
+output,err_msg=sumoProcess.communicate()
+print output
+print err_msg
+'''
 while step < 10000:
     print "Here we take the control !!"
 
-    
+    '''
     if "reach goal || 100 steps gone || collisions happen":
 
         "first remove the auto car "
         "then add a new auto car"
-    
+    '''
+
     vid = "new" + str(step)
     vd.addFull(vid, "cross",typeID="trailer",departPos="780",arrivalPos="780")
     vd.setSpeedMode(vid,0)
@@ -228,7 +235,8 @@ while step < 10000:
     traci.simulationStep()
 
     step += 1
-
+    output, err_msg = sumoProcess.communicate()
+    print output
+    print err_msg
 
 traci.close()
-'''
