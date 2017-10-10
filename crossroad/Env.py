@@ -198,8 +198,8 @@ def generate_flow(vehicle_domain):
 
 
 PORT = 8813
-sumoBinary = "/usr/local/bin/sumo-gui"  # on Mac
-#sumoBinary = "/usr/bin/sumo-gui"  # on linux
+#sumoBinary = "/usr/local/bin/sumo-gui"  # on Mac
+sumoBinary = "/usr/bin/sumo-gui"  # on linux
 sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
