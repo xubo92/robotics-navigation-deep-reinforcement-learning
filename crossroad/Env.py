@@ -6,6 +6,8 @@ import traci
 import random
 import math
 import numpy as np
+import fcntl
+
 
 class Intersaction:
 
@@ -195,12 +197,15 @@ def generate_flow(vehicle_domain):
 
 
 
+def nonblocking(fd):
+    fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+    fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
 
 
 PORT = 8813
 #sumoBinary = "/usr/local/bin/sumo-gui"  # on Mac
 sumoBinary = "/usr/bin/sumo-gui"  # on linux
-sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,close_fds=True)
 
 
 
@@ -208,9 +213,12 @@ vd = traci._vehicle.VehicleDomain()
 
 
 traci.init(PORT)
+
 generate_flow(vd)
 
 step = 0
+
+
 '''
 output,err_msg=sumoProcess.communicate()
 print output
@@ -230,13 +238,16 @@ while step < 10000:
     vd.addFull(vid, "cross",typeID="trailer",departPos="780",arrivalPos="780")
     vd.setSpeedMode(vid,0)
 
+
+
     print vd.getPosition("new0")
     print len(vd.getIDList())
     traci.simulationStep()
 
     step += 1
-    output, err_msg = sumoProcess.communicate()
-    print output
-    print err_msg
+
+
+
+
 
 traci.close()
