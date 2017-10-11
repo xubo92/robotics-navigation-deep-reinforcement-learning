@@ -6,7 +6,7 @@ import traci
 import random
 import math
 import numpy as np
-import fcntl
+
 
 
 class Intersaction:
@@ -18,9 +18,10 @@ class Intersaction:
 
     def __init__(self):
 
-        subprocess.Popen([config['SumoBinary'], "-c", "crossroad.sumocfg", "--remote-port", str(config['PORT']), "--collision.check-junctions", "true","--collision.action", "warn"], stdout=sys.stdout, stderr=sys.stderr)
+        subprocess.Popen([config['SumoBinary'], "-c", "crossroad.sumocfg", "--remote-port", str(config['PORT']), "--collision.check-junctions", "true","--collision.action", "teleport"], stdout=sys.stdout, stderr=sys.stderr)
 
         self.vehicle_domain = traci._vehicle.VehicleDomain()
+        self.simu_domain = traci._simulation.SimulationDomain()
         self.departPos = "780"
         self.arrivalPos = "780"
         self.DrivingRoute = "cross"
@@ -29,19 +30,21 @@ class Intersaction:
         self.cur_reward = None
         self.action_space = np.arange(0,12,1)
 
+
+        traci.init(config['PORT'])
+
         self.generate_flow(self.vehicle_domain)
-        self.c_vid = 'new' + '0'
-        self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="trailer", departPos=self.departPos, arrivalPos=self.arrivalPos)
+        self.c_vid = "Audi L3"
+        self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="trailer", departPos=self.departPos,
+                                    arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
 
         self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
 
-        traci.init(config['PORT'])
-
     def reset(self):
 
         self.vehicle_domain.remove(self.c_vid)
-        self.c_vid = 'new' + '0'
+        self.c_vid = "Audi L3"
         self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="trailer", departPos=self.departPos,arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
 
@@ -168,6 +171,62 @@ class Intersaction:
 
 
 
+
+if __name__=='__main__':
+
+    Intersac = Intersaction()
+
+
+    step = 0
+
+    while step < 10000:
+        print "Here we take the control !!"
+        teleport_list = Intersac.simu_domain.getEndingTeleportIDList()
+        print("teleport list:", teleport_list)
+        arrived_list = Intersac.simu_domain.getArrivedIDList()
+        print("arrived list:", arrived_list)
+
+        if len(teleport_list):
+            collision_t = Intersac.simu_domain.getCurrentTime()
+            print("collisions happened!")
+            #print("collision time: %d" % collision_t)
+            Intersac.vehicle_domain.remove(Intersac.c_vid)
+            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
+            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+
+        elif Intersac.c_vid in arrived_list:
+
+            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
+            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+
+        elif not step % 100:
+            Intersac.vehicle_domain.remove(Intersac.c_vid)
+            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
+            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+
+        # print vd.getPosition(vid)
+        # print len(vd.getIDList())
+        traci.simulationStep()
+
+        step += 1
+
+    traci.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+#*************** back up for test **************#
+
+'''
 def generate_flow(vehicle_domain):
     random.seed(42)  # make tests reproducible
     N = 10000  # number of time steps
@@ -194,60 +253,69 @@ def generate_flow(vehicle_domain):
             vehicle_domain.setSpeedMode("trailer_%i" % vehNr, 0)
             vehNr += 1
             lastVeh = i
-
-
-
-def nonblocking(fd):
-    fl = fcntl.fcntl(fd, fcntl.F_GETFL)
-    fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
-
-
+'''
+'''
 PORT = 8813
 #sumoBinary = "/usr/local/bin/sumo-gui"  # on Mac
 sumoBinary = "/usr/bin/sumo-gui"  # on linux
-sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","warn"],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,close_fds=True)
+sumoProcess = subprocess.Popen([sumoBinary, "-c", "crossroad.sumocfg", "--remote-port", str(PORT),"--collision.check-junctions","true","--collision.action","teleport"],stdout=sys.stdout, stderr=sys.stderr)
 
 
 
 vd = traci._vehicle.VehicleDomain()
-
+sd = traci._simulation.SimulationDomain()
 
 traci.init(PORT)
 
 generate_flow(vd)
 
+vid = "Audi L3"
+vd.addFull(vid, "cross", typeID="trailer", departPos="780", arrivalPos="780")
+vd.setSpeedMode(vid, 0)
+
+
 step = 0
 
-
-'''
-output,err_msg=sumoProcess.communicate()
-print output
-print err_msg
-'''
 while step < 10000:
     print "Here we take the control !!"
 
-    '''
+/*****************************************************************/
     if "reach goal || 100 steps gone || collisions happen":
 
         "first remove the auto car "
         "then add a new auto car"
-    '''
+/*****************************************************************/  
 
-    vid = "new" + str(step)
-    vd.addFull(vid, "cross",typeID="trailer",departPos="780",arrivalPos="780")
-    vd.setSpeedMode(vid,0)
+    teleport_list = sd.getEndingTeleportIDList()
+    print("teleport list:",teleport_list)
+    arrived_list = sd.getArrivedIDList()
+    print("arrived list:",arrived_list)
 
+    if vid in teleport_list:
+        collision_t = sd.getCurrentTime()
+        print("collisions happened!")
+        print("collision time: %d" % collision_t)
+        vd.remove(vid)
+        vd.addFull(vid, "cross", typeID="trailer", departPos="780", arrivalPos="780")
+        vd.setSpeedMode(vid, 0)
 
+    elif vid in arrived_list:
 
-    print vd.getPosition("new0")
-    print len(vd.getIDList())
+        vd.addFull(vid, "cross", typeID="trailer", departPos="780", arrivalPos="780")
+        vd.setSpeedMode(vid, 0)
+        
+    elif not step % 100:
+        vd.remove(vid)
+        vd.addFull(vid, "cross", typeID="trailer", departPos="780", arrivalPos="780")
+        vd.setSpeedMode(vid, 0)
+
+    #print vd.getPosition(vid)
+    #print len(vd.getIDList())
     traci.simulationStep()
+    
 
     step += 1
 
-
-
-
-
 traci.close()
+
+'''
