@@ -23,7 +23,7 @@ class Intersaction:
         self.vehicle_domain = traci._vehicle.VehicleDomain()
         self.simu_domain = traci._simulation.SimulationDomain()
         self.departPos = "780"
-        self.arrivalPos = "780"
+        self.arrivalPos = "20"
         self.DrivingRoute = "cross"
 
         self.cur_state = None
@@ -39,7 +39,13 @@ class Intersaction:
                                     arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
 
-        self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
+
+        #traci.simulationStep()  # simulation step should be ahead of the setting of one vehicle's speed
+
+        #self.vehicle_domain.setSpeed(self.c_vid,0.0)
+        #self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
+
+        self.cur_speed = 0
 
     def reset(self):
 
@@ -48,29 +54,41 @@ class Intersaction:
         self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="trailer", departPos=self.departPos,arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
 
-        cord_set = self.gen_MapPositionsWithIdx(self.c_vid,self.vehicle_domain)
-        self.cur_state = self.gen_state(cord_set,self.vehicle_domain.getIDList(),self.vehicle_domain)
-        return self.cur_state
 
-    def step(self,action_idx):
+        #self.vehicle_domain.setSpeed(self.c_vid, 0)
+        #self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
+        self.cur_speed = 0
+        print "cur_speed:",self.cur_speed
+
+        #cord_set = self.gen_MapPositionsWithIdx(self.c_vid,self.vehicle_domain)
+        #self.cur_state = self.gen_state(cord_set,self.vehicle_domain.getIDList(),self.vehicle_domain)
+        #return self.cur_state
+
+    def act(self,action_idx):
+
 
         timesteps = action_idx / 3 + 1
         mod = action_idx / 3
+
+        print "speed:", self.cur_speed
         if mod == 0:
-            self.vehicle_domain.slowDown(self.c_vid,self.cur_speed + 2 * timesteps,timesteps)
+            self.cur_speed = self.cur_speed + 2 * timesteps
+            self.vehicle_domain.slowDown(self.c_vid,self.cur_speed,timesteps)
         elif mod == 1:
-            self.vehicle_domain.slowDown(self.c_vid,self.cur_speed - 2 * timesteps,timesteps)
+            self.cur_speed = self.cur_speed - 2 * timesteps
+            self.vehicle_domain.slowDown(self.c_vid,self.cur_speed,timesteps)
         elif mod == 2:
             self.vehicle_domain.slowDown(self.c_vid,self.cur_speed,timesteps)
 
 
-        traci.simulationStep(timesteps)
+
+        #traci.simulationStep(timesteps)
 
 
-        cord_set = self.gen_MapPositionsWithIdx(self.c_vid, self.vehicle_domain)
-        self.cur_state = self.gen_state(cord_set, self.vehicle_domain.getIDList(), self.vehicle_domain)
+        #cord_set = self.gen_MapPositionsWithIdx(self.c_vid, self.vehicle_domain)
+        #self.cur_state = self.gen_state(cord_set, self.vehicle_domain.getIDList(), self.vehicle_domain)
 
-        return self.cur_state,self.cur_reward
+        #return self.cur_state,self.cur_reward
 
 
     def generate_flow(self,vehicle_domain):
@@ -92,13 +110,13 @@ class Intersaction:
                 lastVeh = i
             if random.uniform(0, 1) < pEW:
     
-                vehicle_domain.addFull("sporty_%i" % vehNr, "left-right", typeID="sporty", depart="%i" %i,departPos="780")
+                vehicle_domain.addFull("sporty_%i" % vehNr,"left-right", typeID="sporty", depart="%i" %i,departPos="780")
                 vehicle_domain.setSpeedMode("sporty_%i" %vehNr, 0)
                 vehNr += 1
                 lastVeh = i
             if random.uniform(0, 1) < pNS:
     
-                vehicle_domain.addFull("trailer_%i" % vehNr, "left-right", typeID="trailer", depart= "%i" %i,departPos="780")
+                vehicle_domain.addFull("trailer_%i" % vehNr,"left-right", typeID="trailer", depart= "%i" %i,departPos="780")
                 vehicle_domain.setSpeedMode("trailer_%i" %vehNr, 0)
                 vehNr += 1
                 lastVeh = i
@@ -107,8 +125,11 @@ class Intersaction:
     def gen_MapPositionsWithIdx(self,vid,vehicle_domain):
     
         x,y = vehicle_domain.getPosition(vid)
-        x = round(x)
-        y = round(y)
+        x = int(round(x))
+        y = int(round(y))
+
+        print("vid position x  now:",x)
+        print("vid position y  now:",y)
     
         coordinate_set = set()
     
@@ -128,7 +149,7 @@ class Intersaction:
                 if self.isOccupied(x,y,vid,vd):
                     angle = vd.getAngle(vid)
                     velocity = vd.getSpeed(vid)
-                    collision_t = ""  # remain to be calculated later...
+                    collision_t = 10  # remain to be calculated later...
                     state[row_idx,col_idx] = [angle,velocity,collision_t]
     
     
@@ -176,7 +197,6 @@ if __name__=='__main__':
 
     Intersac = Intersaction()
 
-
     step = 0
 
     while step < 10000:
@@ -190,25 +210,34 @@ if __name__=='__main__':
             collision_t = Intersac.simu_domain.getCurrentTime()
             print("collisions happened!")
             #print("collision time: %d" % collision_t)
-            Intersac.vehicle_domain.remove(Intersac.c_vid)
-            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
-            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+            Intersac.reset()
 
         elif Intersac.c_vid in arrived_list:
 
             Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
             Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+            Intersac.vehicle_domain.setSpeed(Intersac.c_vid, 0)
 
         elif not step % 100:
-            Intersac.vehicle_domain.remove(Intersac.c_vid)
-            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
-            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+            Intersac.reset()
 
         # print vd.getPosition(vid)
         # print len(vd.getIDList())
+        Intersac.act(2)
+
+
         traci.simulationStep()
+        print "the %dth step" %step
+
+        cord_set = Intersac.gen_MapPositionsWithIdx(Intersac.c_vid, Intersac.vehicle_domain)
+        Intersac.cur_state = Intersac.gen_state(cord_set, Intersac.vehicle_domain.getIDList(), Intersac.vehicle_domain)
+
+        print Intersac.cur_state
+
+
 
         step += 1
+
 
     traci.close()
 
