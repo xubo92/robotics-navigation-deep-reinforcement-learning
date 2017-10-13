@@ -39,13 +39,15 @@ class Intersaction:
                                     arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
 
+        self.cur_speed = 0
+
 
         #traci.simulationStep()  # simulation step should be ahead of the setting of one vehicle's speed
 
         #self.vehicle_domain.setSpeed(self.c_vid,0.0)
         #self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
 
-        self.cur_speed = 0
+
 
     def reset(self):
 
@@ -53,21 +55,24 @@ class Intersaction:
         self.c_vid = "Audi L3"
         self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="trailer", departPos=self.departPos,arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
+        self.vehicle_domain.setSpeed(self.c_vid,0)
 
-
-        #self.vehicle_domain.setSpeed(self.c_vid, 0)
-        #self.cur_speed = self.vehicle_domain.getSpeed(self.c_vid)
         self.cur_speed = 0
         print "cur_speed:",self.cur_speed
 
-        #cord_set = self.gen_MapPositionsWithIdx(self.c_vid,self.vehicle_domain)
-        #self.cur_state = self.gen_state(cord_set,self.vehicle_domain.getIDList(),self.vehicle_domain)
-        #return self.cur_state
+        traci.simulationStep()
 
-    def act(self,action_idx):
+        cord_set = self.gen_MapPositionsWithIdx(self.c_vid,self.vehicle_domain)
+        self.cur_state = self.gen_state(cord_set,self.vehicle_domain.getIDList(),self.vehicle_domain)
+        return self.cur_state
 
 
-        timesteps = action_idx / 3 + 1
+
+
+    def step(self,action_idx):
+
+
+        timesteps = action_idx % 3 + 1
         mod = action_idx / 3
 
         print "speed:", self.cur_speed
@@ -81,15 +86,34 @@ class Intersaction:
             self.vehicle_domain.slowDown(self.c_vid,self.cur_speed,timesteps)
 
 
+        traci.simulationStep()  # this operation should be ahead of the getArrivedIDList() operation, or the arrival of vehicle would be detected not in time.
 
-        #traci.simulationStep(timesteps)
+        print "Here we take the control !!"
+        teleport_list = Intersac.simu_domain.getEndingTeleportIDList()
+        print("teleport list:", teleport_list)
+        arrived_list = Intersac.simu_domain.getArrivedIDList()
+        print("arrived list:", arrived_list)
+
+        if len(teleport_list):
+            collision_t = Intersac.simu_domain.getCurrentTime()
+            print("collisions happened!")
+            # print("collision time: %d" % collision_t)
+            Intersac.reset()
+
+        elif Intersac.c_vid in arrived_list:
+
+            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
+            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
+            Intersac.cur_speed = 0
 
 
-        #cord_set = self.gen_MapPositionsWithIdx(self.c_vid, self.vehicle_domain)
-        #self.cur_state = self.gen_state(cord_set, self.vehicle_domain.getIDList(), self.vehicle_domain)
+        elif not step % 100:
+            Intersac.reset()
 
-        #return self.cur_state,self.cur_reward
+        cord_set = Intersac.gen_MapPositionsWithIdx(Intersac.c_vid, Intersac.vehicle_domain)
+        Intersac.cur_state = Intersac.gen_state(cord_set, Intersac.vehicle_domain.getIDList(), Intersac.vehicle_domain)
 
+        return Intersac.cur_state
 
     def generate_flow(self,vehicle_domain):
     
@@ -199,45 +223,23 @@ if __name__=='__main__':
 
     step = 0
 
-    while step < 10000:
-        print "Here we take the control !!"
-        teleport_list = Intersac.simu_domain.getEndingTeleportIDList()
-        print("teleport list:", teleport_list)
-        arrived_list = Intersac.simu_domain.getArrivedIDList()
-        print("arrived list:", arrived_list)
+    Intersac.cur_state = Intersac.reset()
 
-        if len(teleport_list):
-            collision_t = Intersac.simu_domain.getCurrentTime()
-            print("collisions happened!")
-            #print("collision time: %d" % collision_t)
-            Intersac.reset()
-
-        elif Intersac.c_vid in arrived_list:
-
-            Intersac.vehicle_domain.addFull(Intersac.c_vid, "cross", typeID="trailer", departPos="780", arrivalPos="20")
-            Intersac.vehicle_domain.setSpeedMode(Intersac.c_vid, 0)
-            Intersac.vehicle_domain.setSpeed(Intersac.c_vid, 0)
-
-        elif not step % 100:
-            Intersac.reset()
-
-        # print vd.getPosition(vid)
-        # print len(vd.getIDList())
-        Intersac.act(2)
+    while step < 100000:
 
 
-        traci.simulationStep()
-        print "the %dth step" %step
-
-        cord_set = Intersac.gen_MapPositionsWithIdx(Intersac.c_vid, Intersac.vehicle_domain)
-        Intersac.cur_state = Intersac.gen_state(cord_set, Intersac.vehicle_domain.getIDList(), Intersac.vehicle_domain)
-
-        print Intersac.cur_state
 
 
+
+
+
+
+
+
+        #print Intersac.cur_state
 
         step += 1
-
+        print "the %dth step" % step
 
     traci.close()
 
