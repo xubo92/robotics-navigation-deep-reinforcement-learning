@@ -34,5 +34,14 @@ class DQN_for_CROSS:
         model.add(Dense(100,activation='relu'))
         model.add(Dense(12,activation='linear'))
         model.compile(loss='mse',optimizer = optimizers.RMSprop(lr=self.learning_rate))
-        
+        self.model = model
 
+    def remember(self,state,action,reward,next_state,done):
+        self.memory.append((state,action,reward,next_state,done))
+
+
+    def act(self, state):
+        if np.random.rand() <= self.epsilon:
+            return self.env.action_space.sample()
+        act_values = self.model.predict(state)
+        return np.argmax(act_values[0])  # returns action
