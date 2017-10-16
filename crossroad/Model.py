@@ -19,6 +19,8 @@ class DQN_for_CROSS:
         self.env = env
         self.memory = list()
 
+
+        self.mini_batch_size = 50
         self.gamma = 0.9
         self.learning_rate = 0.0001
         self.epsilon = 1.0
