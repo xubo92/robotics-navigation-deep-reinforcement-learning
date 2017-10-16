@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0eae5de0-7362-4017-93fb-3bb0df7979b6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/crossroad/main.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crossroad/AutoCarControl.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Learn-Crossroad.iml" afterPath="$PROJECT_DIR$/.idea/Learn-Crossroad.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Learn-to-pass-crossroad-DQN.iml" afterPath="$PROJECT_DIR$/.idea/Learn-to-pass-crossroad-DQN.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crossroad/Env.py" afterPath="$PROJECT_DIR$/crossroad/Env.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crossroad/Model.py" afterPath="$PROJECT_DIR$/crossroad/Model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crossroad/main.py" afterPath="$PROJECT_DIR$/crossroad/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,11 +19,31 @@
       <file leaf-file-name="Model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crossroad/Model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="39" column="65" lean-forward="false" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+            <state relative-caret-position="141">
+              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_simulation.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/share/sumo/tools/traci/_simulation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_vehicle.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/share/sumo/tools/traci/_vehicle.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="49" column="4" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -34,8 +51,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crossroad/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="28" column="46" lean-forward="false" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+            <state relative-caret-position="145">
+              <caret line="36" column="58" lean-forward="true" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="58" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -43,65 +60,35 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="connection.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/share/sumo/tools/traci/connection.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="270" column="8" lean-forward="false" selection-start-line="270" selection-start-column="8" selection-end-line="270" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Env.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crossroad/Env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="47" column="50" lean-forward="true" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+            <state relative-caret-position="54">
+              <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
               <folding>
-                <element signature="e#2#16#0" expanded="true" />
-                <element signature="e#7175#8308#1" expanded="false" />
-                <element signature="e#8309#10134#1" expanded="false" />
+                <element signature="e#25#39#0" expanded="true" />
+                <element signature="e#8464#9597#1" expanded="false" />
+                <element signature="e#9598#11423#1" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/__init__.py">
+        <entry file="file:///usr/share/sumo/tools/traci/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1547">
-              <caret line="105" column="56" lean-forward="false" selection-start-line="105" selection-start-column="48" selection-end-line="105" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_simulation.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_simulation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="101" column="8" lean-forward="false" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_vehicle.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_vehicle.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12937">
-              <caret line="765" column="21" lean-forward="false" selection-start-line="765" selection-start-column="19" selection-end-line="765" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="domain.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/domain.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1904">
-              <caret line="120" column="15" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_edge.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_edge.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="57" column="46" lean-forward="false" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="46" />
+            <state relative-caret-position="282">
+              <caret line="108" column="38" lean-forward="true" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -135,6 +122,8 @@
       <find>cur_speed</find>
       <find>GETIDLI</find>
       <find>get</find>
+      <find>TIME</find>
+      <find>getLeader</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -164,15 +153,16 @@
         <option value="$PROJECT_DIR$/crossroad/crossroad.rou.xml" />
         <option value="$PROJECT_DIR$/crossroad/AutoCarControl.py" />
         <option value="$PROJECT_DIR$/crossroad/main.py" />
+        <option value="$PROJECT_DIR$/crossroad/Model.py" />
         <option value="$PROJECT_DIR$/crossroad/Env.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="27" />
-    <option name="width" value="1104" />
-    <option name="height" value="697" />
+    <option name="x" value="65" />
+    <option name="y" value="24" />
+    <option name="width" value="650" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -216,18 +206,18 @@
             <path>
               <item name="Learn-to-pass-crossroad-DQN" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.10 (/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="&lt; Python 2.7.6 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
             <path>
               <item name="Learn-to-pass-crossroad-DQN" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.10 (/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="&lt; Python 2.7.6 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="tools" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Learn-to-pass-crossroad-DQN" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.10 (/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="&lt; Python 2.7.6 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="tools" type="462c0819:PsiDirectoryNode" />
               <item name="traci" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -382,16 +372,23 @@
       <option name="project" value="LOCAL" />
       <updated>1504229706853</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="model part &amp; env part ready!">
+      <created>1508155838832</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1508155838832</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="23" width="1099" height="697" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18835305" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18831667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4848" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.51057404" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -416,7 +413,8 @@
     <MESSAGE value="add crossroad map" />
     <MESSAGE value="add initial traci-python control part" />
     <MESSAGE value="improve traci-python control part" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve traci-python control part" />
+    <MESSAGE value="model part &amp; env part ready!" />
+    <option name="LAST_COMMIT_MESSAGE" value="model part &amp; env part ready!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -432,13 +430,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/crossroad/crossroad.sumocfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/basic/cfg.sumocfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -521,7 +512,6 @@
     <entry file="file:///usr/share/sumo/tools/traci/_route.py" />
     <entry file="file:///usr/share/sumo/tools/traci/_person.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1247972723/_socket.py" />
-    <entry file="file:///usr/share/sumo/tools/traci/connection.py" />
     <entry file="file:///usr/share/sumo/tools/traci/constants.py" />
     <entry file="file:///usr/share/sumo/tools/traci/exceptions.py" />
     <entry file="file:///usr/share/sumo/tools/traci/domain.py" />
@@ -548,7 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/share/sumo/tools/traci/__init__.py" />
     <entry file="file://$PROJECT_DIR$/basic/car.rou.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -565,7 +554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/share/sumo/tools/traci/_vehicle.py" />
     <entry file="file://$PROJECT_DIR$/crossroad/crossroad.rou.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -575,74 +563,59 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crossroad/AutoCarControl.py" />
-    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/subprocess.py">
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/subprocess.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/connection.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_simulation.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_edge.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/domain.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_vehicle.py" />
+    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/__init__.py" />
+    <entry file="file:///usr/share/sumo/tools/traci/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12053">
-          <caret line="709" column="0" lean-forward="false" selection-start-line="709" selection-start-column="0" selection-end-line="709" selection-end-column="0" />
+        <state relative-caret-position="282">
+          <caret line="108" column="38" lean-forward="true" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/share/sumo/tools/traci/_simulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/share/sumo/tools/traci/connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="270" column="8" lean-forward="false" selection-start-line="270" selection-start-column="8" selection-end-line="270" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/share/sumo/tools/traci/_vehicle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="49" column="4" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crossroad/Model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="39" column="65" lean-forward="false" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+        <state relative-caret-position="141">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_simulation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="101" column="8" lean-forward="false" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_edge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="57" column="46" lean-forward="false" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/domain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="120" column="15" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/_vehicle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12937">
-          <caret line="765" column="21" lean-forward="false" selection-start-line="765" selection-start-column="19" selection-end-line="765" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/sumo-0.30.0/tools/traci/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1547">
-          <caret line="105" column="56" lean-forward="false" selection-start-line="105" selection-start-column="48" selection-end-line="105" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/crossroad/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="28" column="46" lean-forward="false" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+        <state relative-caret-position="145">
+          <caret line="36" column="58" lean-forward="true" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="58" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -651,12 +624,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crossroad/Env.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="47" column="50" lean-forward="true" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+        <state relative-caret-position="54">
+          <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding>
-            <element signature="e#2#16#0" expanded="true" />
-            <element signature="e#7175#8308#1" expanded="false" />
-            <element signature="e#8309#10134#1" expanded="false" />
+            <element signature="e#25#39#0" expanded="true" />
+            <element signature="e#8464#9597#1" expanded="false" />
+            <element signature="e#9598#11423#1" expanded="false" />
           </folding>
         </state>
       </provider>

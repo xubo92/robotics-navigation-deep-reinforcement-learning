@@ -39,7 +39,7 @@ class Intersaction:
 
         self.vehicle_domain = traci._vehicle.VehicleDomain()
         self.simu_domain = traci._simulation.SimulationDomain()
-        self.departPos = "780"
+        self.departPos = "790"
         self.arrivalPos = "20"
         self.DrivingRoute = "cross"
 
@@ -122,8 +122,7 @@ class Intersaction:
 
         traci.simulationStep(self.simu_domain.getCurrentTime()+timesteps*1000)
 
-        # 实际速度上比goal speed少了0.4m/s是对的，getSpeed函数只能获得上一时间点的速度
-        print "audi L3 speed at last step:", self.vehicle_domain.getSpeed(self.c_vid)
+
 
         print "current vehicles:", self.vehicle_domain.getIDList()
 
@@ -145,10 +144,11 @@ class Intersaction:
             self.cur_reward = -0.01
 
         if not self.done:
-
+            # 实际速度上比goal speed少了0.4m/s是对的，getSpeed函数只能获得上一时间点的速度
+            print "audi L3 speed at last step:", self.vehicle_domain.getSpeed(self.c_vid)
             cord_set = self.gen_MapPositionsWithIdx(self.c_vid, self.vehicle_domain)
             self.cur_state = self.gen_state(cord_set, self.vehicle_domain.getIDList(), self.vehicle_domain)
-
+            print cord_set
         else:
             self.cur_state = np.ones((6,11,3))
 
@@ -169,19 +169,19 @@ class Intersaction:
         for i in range(N):
             if random.uniform(0, 1) < pWE:
     
-                vehicle_domain.addFull("normal_%i" %vehNr,"left-right",typeID="normal",depart="%i" %i ,departPos="780")
+                vehicle_domain.addFull("normal_%i" %vehNr,"left-right",typeID="normal",depart="%i" %i ,departPos="790")
                 vehicle_domain.setSpeedMode("normal_%i" %vehNr,0)
                 vehNr += 1
                 lastVeh = i
             if random.uniform(0, 1) < pEW:
     
-                vehicle_domain.addFull("sporty_%i" % vehNr,"left-right", typeID="sporty", depart="%i" %i,departPos="780")
+                vehicle_domain.addFull("sporty_%i" % vehNr,"left-right", typeID="sporty", depart="%i" %i,departPos="790")
                 vehicle_domain.setSpeedMode("sporty_%i" %vehNr, 0)
                 vehNr += 1
                 lastVeh = i
             if random.uniform(0, 1) < pNS:
     
-                vehicle_domain.addFull("trailer_%i" % vehNr,"left-right", typeID="trailer", depart= "%i" %i,departPos="780")
+                vehicle_domain.addFull("trailer_%i" % vehNr,"left-right", typeID="trailer", depart= "%i" %i,departPos="790")
                 vehicle_domain.setSpeedMode("trailer_%i" %vehNr, 0)
                 vehNr += 1
                 lastVeh = i
@@ -211,10 +211,18 @@ class Intersaction:
         state = np.zeros((6,11,3))
         for x,y,row_idx,col_idx in cord_set:
             for vid in vehicle_list:
-                if self.isOccupied(x,y,vid,vd):
+
+                if vid != self.c_vid and self.isOccupied(x,y,vid,vd):
                     angle = vd.getAngle(vid)
                     velocity = vd.getSpeed(vid)
-                    collision_t = 10  # remain to be calculated later...
+                    # remain to be calculated later...
+                    collision_tuple = vd.getLeader(vid)
+                    if collision_tuple != None and velocity != 0:
+                        collision_t = collision_tuple[1] * 1.0 / velocity
+                        print "TTC TIME:",collision_t
+                    else:
+                        collision_t  = 10000
+                        print "TTC TIME:", collision_t
                     state[row_idx,col_idx] = [angle,velocity,collision_t]
     
     

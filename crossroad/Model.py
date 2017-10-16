@@ -31,7 +31,7 @@ class DQN_for_CROSS:
     def create_model(self):
 
         model = Sequential()
-        model.add(Dense(100,input_dim=198,activation='relu'))
+        model.add(Dense(100,input_dim=6*11*3,activation='relu'))
         model.add(Dense(100,activation='relu'))
         model.add(Dense(100,activation='relu'))
         model.add(Dense(12,activation='linear'))

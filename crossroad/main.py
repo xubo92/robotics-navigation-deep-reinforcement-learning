@@ -22,6 +22,7 @@ if __name__ == '__main__':
     for ep_idx in range(episode_num):
 
         cur_state = Intersac.reset()
+        cur_state = np.reshape(cur_state,[1,6*11*3])
         print np.shape(cur_state)
 
         n = 0
@@ -33,6 +34,7 @@ if __name__ == '__main__':
             # c_action_idx = 2
             next_state,c_reward,done,accident,_ = Intersac.step(c_action_idx)
 
+            next_state = np.reshape(next_state,[1,6*11*3])
             print np.shape(next_state)
 
             DQN.remember(cur_state, c_action_idx, c_reward, next_state, done)
