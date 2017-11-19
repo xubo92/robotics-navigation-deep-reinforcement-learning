@@ -9,8 +9,11 @@ I am focusing on the robotics navigation problem with reinforcement learning met
 Currently, I am writting the code based on the paper ["Navigation intersactions with Autonomous vehicles using Deep Reinforcement Learning"](http://xueshu.baidu.com/s?wd=paperuri%3A%288096d7729767e358d7308ee6a1bb902d%29&filter=sc_long_sign&tn=SE_xueshusource_2kduw22v&sc_vurl=http%3A%2F%2Farxiv.org%2Fpdf%2F1705.01196&ie=utf-8&sc_us=17616306211134359942). This paper provided an efficient strategy to navigate safety through unsignaled intersactions.
 
 - **basic** : include the elementary parts of a 'SUMO' map 
+
   *!IMPORTANT*: SUMO is the short of "Simulation of Urban Mobility". It is a software which help you creat any kinds of traffic simulation scenes quickly. 
-  *!IMPORTANT*: You'd better read the tutorials of SUMO first in order to understand the content below. Tutorials are here: [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials).Apart from that, the blog is great for your quick scan on SUMO's utility. 
+  
+  *!IMPORTANT*: You'd better read the tutorials of SUMO first in order to understand the content below. Tutorials are here: [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials).Apart from that, the blog is great for your quick scan on SUMO's utility.
+  
   There are five parts below:
   1. car.rou.xml : Defined by user. You have to define the car flow on certain route or place in order to simulate the traffic scene.
   2. edges.edg.xml : Defined by user. To build a road net(see [road.net.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/basic/road.net.xml)) , you have to define the every edge as you wish.
