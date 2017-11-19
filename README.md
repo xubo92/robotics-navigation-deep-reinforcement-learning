@@ -29,11 +29,11 @@ Currently, I am writting the code based on the paper ["Navigation intersactions 
      - [crossroad.rou.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.rou.xml) : a convenient way to define the motion trace of cars. See [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials)
      - [crossroad.sumocfg.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.sumocfg) : As usual, the parameters file for simulation circle.
    + Deep reinforcement learning model
-     - Model.py : Implemented a basic DQN model based on the paper ["Human level control through deep reinforcement learning"](https://www.nature.com/articles/nature14236.pdf). This model serves as a complicated function to get policy output via image features input.
+     - [Model.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/Model.py) : Implemented a basic DQN model based on the paper ["Human level control through deep reinforcement learning"](https://www.nature.com/articles/nature14236.pdf). This model serves as a complicated function to get policy output via image features input.
    + Environment setting
-     - Env.py : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov chain(another jargon in reinforcement learning).
+     - [Env.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/Env.py) : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov chain(another jargon in reinforcement learning).
    + reinforcement learning algorithm and main function for training
-     - Main.py : Implemented Q-learning algorithm embedded in whole training procedure. You only need to execute this file to start the training.
+     - [Main.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/main.py) : Implemented Q-learning algorithm embedded in whole training procedure. You only need to execute this file to start the training.
   
   
 
