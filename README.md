@@ -25,15 +25,15 @@ Currently, I am writting the code based on the paper ["Navigation intersactions 
   **IMPORTANT** : 'Traci' is the short for "Traffic Control Interface". It is a library used for the communication with SUMO based on TCP protocol in order to modify and recieve values in simulation on-line. We apply Traci here since we need to interfere with simulation procedure('Environment' in reinforcement learing) to choose actions or stop the episode('action' and 'episode' are terms in reinforcement learing). To get familiar with Traci first, you'd better check [Traci Tutorials](http://www.sumo.dlr.de/userdoc/TraCI/Protocol.html)
   There are four parts now:
    1. Traffic map
-    + crossroad.net.xml(https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.net.xml) : a complete road net
-    + crossroad.rou.xml(https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.rou.xml) : a convenient way to define the motion trace of cars. See [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials)
-    + crossroad.sumocfg.xml(https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.sumocfg) : As usual, the parameters file for simulation circle.
+    - [crossroad.net.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.net.xml) : a complete road net
+    - [crossroad.rou.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.rou.xml) : a convenient way to define the motion trace of cars. See [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials)
+    - [crossroad.sumocfg.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.sumocfg) : As usual, the parameters file for simulation circle.
    2. Deep reinforcement learning model
-    + Model.py : Implemented a basic DQN model based on the paper ["Human level control through deep reinforcement learning"](https://www.nature.com/articles/nature14236.pdf). This model serves as a complicated function to get policy output via image features input.
+    - Model.py : Implemented a basic DQN model based on the paper ["Human level control through deep reinforcement learning"](https://www.nature.com/articles/nature14236.pdf). This model serves as a complicated function to get policy output via image features input.
    3. Environment setting
-    + Env.py : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov chain(another jargon in reinforcement learning).
+    - Env.py : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov chain(another jargon in reinforcement learning).
    4. reinforcement learning algorithm and main function for training
-    + Main.py : Implemented Q-learning algorithm embedded in whole training procedure. You only need to execute this file to start the training.
+    - Main.py : Implemented Q-learning algorithm embedded in whole training procedure. You only need to execute this file to start the training.
   
   
 
