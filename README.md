@@ -31,7 +31,7 @@ Currently, I am writting the code based on the paper ["Navigation intersactions 
    + Deep reinforcement learning model
      - [Model.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/Model.py) : Implemented a basic DQN model based on the paper ["Human level control through deep reinforcement learning"](https://www.nature.com/articles/nature14236.pdf). This model serves as a complicated function to get policy output via image features input.
    + Environment setting
-     - [Env.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/Env.py) : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov chain(another jargon in reinforcement learning).
+     - [Env.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/Env.py) : Implemented environment logic such as how to convert information from SUMO to the necessary states in Markov Decision Process.
    + reinforcement learning algorithm and main function for training
      - [Main.py](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/main.py) : Implemented Q-learning algorithm embedded in whole training procedure. You only need to execute this file to start the training.
   
