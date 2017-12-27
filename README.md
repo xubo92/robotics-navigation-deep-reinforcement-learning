@@ -1,3 +1,4 @@
+
 # Robotics-Naigation-Deep-Reinforcement-Learning
 
 ## Instructions
@@ -7,6 +8,7 @@ I am focusing on the robotics navigation problem with reinforcement learning met
 
 # what is in this repository?
 Currently, I am writting the code based on the paper ["Navigation intersactions with Autonomous vehicles using Deep Reinforcement Learning"](http://xueshu.baidu.com/s?wd=paperuri%3A%288096d7729767e358d7308ee6a1bb902d%29&filter=sc_long_sign&tn=SE_xueshusource_2kduw22v&sc_vurl=http%3A%2F%2Farxiv.org%2Fpdf%2F1705.01196&ie=utf-8&sc_us=17616306211134359942). This paper provided an efficient strategy to navigate safety through unsignaled intersactions.  
+
 ![screen shot](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/programImage.png)  
 
 - **basic** : Include the elementary parts of a 'SUMO' map 
