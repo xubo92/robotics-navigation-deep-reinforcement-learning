@@ -25,8 +25,7 @@ Currently, I am writting the code based on the paper ["Navigation intersactions 
   **IMPORTANT** : 'Traci' is the short for "Traffic Control Interface". It is a library used for the communication with SUMO based on TCP protocol in order to modify and recieve values in simulation on-line. We apply Traci here since we need to interfere with simulation procedure('Environment' in reinforcement learing) to choose actions or stop the episode('action' and 'episode' are terms in reinforcement learing). To get familiar with Traci first, you'd better check [Traci Tutorials](http://www.sumo.dlr.de/userdoc/TraCI/Protocol.html)  
   
   There are four parts now:  
-  
-  ![image](file:///C:\Users\lvxub\Desktop\RL论文\programImage.png)
+
    + Traffic map
      - [crossroad.net.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.net.xml) : a complete road net
      - [crossroad.rou.xml](https://github.com/lvlvlvlvlv/Robotics-Navigation-Deep-Reinforcement-Learning/blob/master/crossroad/crossroad.rou.xml) : a convenient way to define the motion trace of cars. See [SUMO TUTORIALS](http://sumo.dlr.de/wiki/Tutorials)
