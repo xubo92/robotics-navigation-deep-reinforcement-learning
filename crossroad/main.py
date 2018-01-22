@@ -11,12 +11,19 @@ from Model import DQN_for_CROSS
 if __name__ == '__main__':
 
     Intersac = Intersaction()
-    DQN = DQN_for_CROSS(Intersac)
+    Intersac.vehicle_domain.addFull(Intersac.c_vid, Intersac.DrivingRoute, typeID="sporty", departPos=Intersac.departPos,
+                           arrivalPos=Intersac.arrivalPos)
 
+    for i in range(10000):
+        traci.simulationStep()
+        Intersac.state(Intersac.vehicle_domain)
+    '''
+    DQN = DQN_for_CROSS(Intersac)
     episode_num = 10000
     ep_idx = 0
     max_timestep = 100
 
+    print sys.path
 
 
     for ep_idx in range(episode_num):
@@ -28,6 +35,8 @@ if __name__ == '__main__':
         n = 0
 
         while n <= max_timestep:
+
+            loss = 0
 
             c_action_idx = DQN.act(cur_state)
 
@@ -59,14 +68,18 @@ if __name__ == '__main__':
                 if replay_done:
                     replay_c_target = replay_c_reward
                 else:
+                    # model.predict means forward calculation for getting real label. Since we don't have any label before but to calculate it.
+                    # if we have real label(like the situation in Lily's SVM), then we don't need to model.predict here
                     replay_c_target = replay_c_reward + DQN.gamma * np.amax(DQN.model.predict(replay_next_state)[0])
 
                 replay_c_expectValue = DQN.model.predict(replay_c_state)
                 replay_c_expectValue[0][replay_c_action_idx] = replay_c_target
-
+                # model.fit means training. replay_c_state : X (input sample); replay_c_expectValue:Y (real label)
                 DQN.model.fit(replay_c_state, replay_c_expectValue, nb_epoch=1, verbose=0)
-
+                loss += DQN.model.evaluate(replay_c_state, replay_c_expectValue)
+            loss = loss * 1.0 / batch_size
+            print("trainning loss at step %d : %.2f", (n,loss))
             if DQN.epsilon > DQN.epsilon_min:
                 DQN.epsilon *= DQN.epsilon_decay
-
-    traci.close()
+    '''
+    #traci.close()

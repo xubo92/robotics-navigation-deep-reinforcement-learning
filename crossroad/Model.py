@@ -42,6 +42,7 @@ class DQN_for_CROSS:
         self.memory.append((state,action,reward,next_state,done))
 
 
+
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             return self.env.action_space.sample()
