@@ -6,7 +6,8 @@ import traci
 import random
 import math
 import numpy as np
-from PIL import Image,ImageDraw
+import cv2
+
 
 class action_space:
     def __init__(self,action_num):
@@ -50,7 +51,9 @@ class Intersaction:
 
         self.Audi_viewrange_axis0 = 100
         self.Audi_viewrange_axis1 = 30
-        self.Audi_viewmap = Image.new('L',(self.Audi_viewrange_axis0,self.Audi_viewrange_axis1),255)
+
+        self.unit = 10
+
 
         self.done = False
         self.accident = False
@@ -67,15 +70,13 @@ class Intersaction:
 
     def reset(self):
 
-        if self.accident:
+
+        vehicle_list = self.vehicle_domain.getIDList()
+
+        if self.c_vid in vehicle_list:
             self.vehicle_domain.remove(self.c_vid)
 
-        #print self.vehicle_domain.getIDList()
-
-        if self.c_vid not in self.vehicle_domain.getIDList():
-
-            self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="sp", departPos=self.departPos,arrivalPos=self.arrivalPos)
-
+        self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="sporty", departPos=self.departPos,arrivalPos=self.arrivalPos)
         self.vehicle_domain.setSpeedMode(self.c_vid, 0)
         self.vehicle_domain.setSpeed(self.c_vid,0)
 
@@ -83,11 +84,11 @@ class Intersaction:
 
         traci.simulationStep()
 
-        cord_set = self.gen_MapPositionsWithIdx(self.c_vid,self.vehicle_domain)
-        self.cur_state = self.gen_state(cord_set,self.vehicle_domain.getIDList(),self.vehicle_domain)
+        self.cur_state = self.state(self.vehicle_domain)
 
         self.done = False
         self.accident = False
+        self.successful = False
 
         return self.cur_state
 
@@ -95,8 +96,14 @@ class Intersaction:
     # state: 30 * 100 * 1, grey scale image
     # range: -50 ~ +50; 0 ~ 30; Do not consider the direction change of vehicle's head
     def state(self, vehicle_domain):
+
         vehicle_list = self.vehicle_domain.getIDList()
         print vehicle_list
+
+        if self.c_vid not in vehicle_list and self.accident == False:
+            self.successful = True
+            self.vehicle_domain.addFull(self.c_vid, self.DrivingRoute, typeID="sporty", departPos=self.departPos,arrivalPos=self.arrivalPos)
+
         Audi_x, Audi_y = vehicle_domain.getPosition(self.c_vid)
         Audi_interval_axis0 = (Audi_x - self.Audi_viewrange_axis0,Audi_x + self.Audi_viewrange_axis0)
         Audi_interval_axis1 = (Audi_y,Audi_y + self.Audi_viewrange_axis1)
@@ -142,10 +149,17 @@ class Intersaction:
                         valid_vehicles[vid] = [x - vehicle_L, x + vehicle_L,y - vehicle_W,y + vehicle_W]
 
         print "valid_vehicles:",valid_vehicles
-        for key in valid_vehicles:
-            self.draw_rect(valid_vehicles[key],self.Audi_viewmap)
 
-        self.Audi_viewmap.show()
+        img = np.zeros((self.Audi_viewrange_axis1*self.unit,self.Audi_viewrange_axis0*self.unit),np.uint8)
+        for key in valid_vehicles:
+            cv2.rectangle(img,(int(round(valid_vehicles[key][1]-self.Audi_viewrange_axis0/2))*self.unit,int(round(valid_vehicles[key][3]-self.Audi_viewrange_axis1))*self.unit),(int(round(valid_vehicles[key][0]-self.Audi_viewrange_axis0/2))*self.unit,int(round(valid_vehicles[key][2]+self.Audi_viewrange_axis1))*self.unit),255,-1)
+            #cv2.rectangle(img, (384, 0), (510, 128), 255, -1)
+        cv2.imshow("image",img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+
+
     # Generate other traffic flows
     def generate_flow(self, vehicle_domain):
 
@@ -155,7 +169,6 @@ class Intersaction:
         pWE = 1. / 5
         pEW = 1. / 6
         pNS = 1. / 15
-        lastVeh = 0
         vehNr = 0
         for i in range(N):
             if random.uniform(0, 1) < pWE:
@@ -163,19 +176,19 @@ class Intersaction:
                                        departPos="750")
                 vehicle_domain.setSpeedMode("normal_%i" % vehNr, 0)
                 vehNr += 1
-                lastVeh = i
+
             if random.uniform(0, 1) < pEW:
                 vehicle_domain.addFull("sporty_%i" % vehNr, "left-right", typeID="sporty", depart="%i" % i,
                                        departPos="750")
                 vehicle_domain.setSpeedMode("sporty_%i" % vehNr, 0)
                 vehNr += 1
-                lastVeh = i
+
             if random.uniform(0, 1) < pNS:
                 vehicle_domain.addFull("trailer_%i" % vehNr, "left-right", typeID="trailer", depart="%i" % i,
                                        departPos="750")
                 vehicle_domain.setSpeedMode("trailer_%i" % vehNr, 0)
                 vehNr += 1
-                lastVeh = i
+
 
     def step(self,action_idx):
 
@@ -228,21 +241,16 @@ class Intersaction:
         if not self.done:
             # 实际速度上比goal speed少了0.4m/s是对的，getSpeed函数只能获得上一时间点的速度
             print "audi L3 speed at last step:", self.vehicle_domain.getSpeed(self.c_vid)
-            cord_set = self.gen_MapPositionsWithIdx(self.c_vid, self.vehicle_domain)
-            self.cur_state = self.gen_state(cord_set, self.vehicle_domain.getIDList(), self.vehicle_domain)
-            print cord_set
+
+            self.cur_state = self.state(self.vehicle_domain)
+
         else:
             self.cur_state = np.ones((6,11,3))
 
         return self.cur_state,self.cur_reward,self.done,self.accident,steps
 
     
-    def draw_rect(self,rect,Image):
-        draw = ImageDraw.Draw(Image)
-        # rect -> [rectX_low, rectX_top, rectY_low, rectY_top]
-        for x in range(rect[0], rect[1]):
-            for y in range(rect[2],rect[3]):
-                draw.rectangle(((rect[0],rect[2]),(rect[1],rect[3])),fill='black')
+
 
 
 
