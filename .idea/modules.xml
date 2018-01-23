@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Learn-Crossroad.iml" filepath="$PROJECT_DIR$/.idea/Learn-Crossroad.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Learn-to-pass-crossroad-DQN.iml" filepath="$PROJECT_DIR$/.idea/Learn-to-pass-crossroad-DQN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Robotics-Navigation-Deep-Reinforcement-Learning.iml" filepath="$PROJECT_DIR$/.idea/Robotics-Navigation-Deep-Reinforcement-Learning.iml" />
     </modules>
   </component>
 </project>
