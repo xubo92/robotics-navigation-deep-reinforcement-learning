@@ -41,7 +41,7 @@ class Intersaction:
         self.vehicle_domain = traci._vehicle.VehicleDomain()
         self.simu_domain = traci._simulation.SimulationDomain()
         self.vehicletype_domain = traci._vehicletype.VehicleTypeDomain()
-        self.departPos = "750"
+        self.departPos = "790"
         self.arrivalPos = "20"
         self.DrivingRoute = "cross"
 
@@ -49,15 +49,15 @@ class Intersaction:
         self.cur_reward = None
 
 
-        self.Audi_viewrange_axis0 = 100
+        self.Audi_viewrange_axis0 = 50 # one-side
         self.Audi_viewrange_axis1 = 30
 
-        self.unit = 10
+        self.unit = 5
 
 
         self.done = False
         self.accident = False
-        self.action_space = action_space(12)
+        self.action_space = action_space(5)  # need more consideration
 
         self.goal_speed = 0
 
@@ -150,14 +150,26 @@ class Intersaction:
 
         print "valid_vehicles:",valid_vehicles
 
-        img = np.zeros((self.Audi_viewrange_axis1*self.unit,self.Audi_viewrange_axis0*self.unit),np.uint8)
+        # coordinate transfer. (c_vid.x,c_vid.y) ---> (self.Audi_viewrange_axis0,0)
+        img = np.zeros((self.Audi_viewrange_axis1*self.unit,self.Audi_viewrange_axis0*2*self.unit),np.uint8)
+
+        transfer_axis0 = self.Audi_viewrange_axis0 - Audi_x
+        transfer_axis1 = 0 - Audi_y
         for key in valid_vehicles:
-            cv2.rectangle(img,(int(round(valid_vehicles[key][1]-self.Audi_viewrange_axis0/2))*self.unit,int(round(valid_vehicles[key][3]-self.Audi_viewrange_axis1))*self.unit),(int(round(valid_vehicles[key][0]-self.Audi_viewrange_axis0/2))*self.unit,int(round(valid_vehicles[key][2]+self.Audi_viewrange_axis1))*self.unit),255,-1)
+            top_left = (int(round(self.unit*(valid_vehicles[key][0]+transfer_axis0))),int(round(self.unit*(valid_vehicles[key][3] + transfer_axis1))))
+            bottom_right = (int(round(self.unit*(valid_vehicles[key][1]+transfer_axis0))),int(round(self.unit*(valid_vehicles[key][2] + transfer_axis1))))
+            print "top_left:", top_left
+            print "bottom_right:",bottom_right
+            # Opencv top-left as origin point, not bottom-left, so
+            top_left = (top_left[0],self.unit * self.Audi_viewrange_axis1 - top_left[1])
+            bottom_right = (bottom_right[0], self.unit * self.Audi_viewrange_axis1 - bottom_right[1])
+            cv2.rectangle(img,bottom_right,top_left,255,-1)
             #cv2.rectangle(img, (384, 0), (510, 128), 255, -1)
         cv2.imshow("image",img)
-        cv2.waitKey(0)
+        cv2.waitKey(100)
         cv2.destroyAllWindows()
 
+        return img
 
 
     # Generate other traffic flows
@@ -191,35 +203,21 @@ class Intersaction:
 
 
     def step(self,action_idx):
+        steps = 0
+        timesteps = 0
+        next_state = np.zeros((self.Audi_viewrange_axis1*self.unit,self.Audi_viewrange_axis0*2*self.unit),np.uint8)
 
-        steps = (action_idx % 3 + 1)  # steps
-        timesteps = steps * 0.2  # seconds
+        if action_idx != 4:
+            steps = 2 ^ action_idx # steps
+            timesteps = steps * 0.2  # seconds
+            self.vehicle_domain.setSpeed(self.c_vid,0)
 
-        mod = action_idx / 3
-
-        if mod == 0:
-            # accel is 2m/s^2
-            self.goal_speed = self.goal_speed + 2 * timesteps
-            # timesteps * 1000 --> ms
-            self.vehicle_domain.slowDown(self.c_vid,self.goal_speed,timesteps*1000)
-        elif mod == 1:
-            self.goal_speed = self.goal_speed - 2 * timesteps
-            if self.goal_speed < 0:
-                self.goal_speed = 0
-            self.vehicle_domain.slowDown(self.c_vid,self.goal_speed,timesteps*1000)
-        elif mod == 2:
-            self.vehicle_domain.slowDown(self.c_vid,self.goal_speed,timesteps*1000)
-
-        #print "goal speed:",self.goal_speed
-        #print "current time:",self.simu_domain.getCurrentTime()
-        #print "time step period:",timesteps*1000
-
+        else:
+            steps = 1 # steps
+            timesteps = steps * 0.2  # seconds
+            self.vehicle_domain.slowDown(self.c_vid,self.vehicle_domain.getSpeed(self.c_vid)+2*timesteps,timesteps*1000)
 
         traci.simulationStep(self.simu_domain.getCurrentTime()+timesteps*1000)
-
-
-
-        print "current vehicles:", self.vehicle_domain.getIDList()
 
         teleport_list = self.simu_domain.getEndingTeleportIDList()
         print("teleport list:", teleport_list)
@@ -230,24 +228,19 @@ class Intersaction:
             print("collisions happened!")
             self.accident = True
             self.cur_reward = -10
+            next_state = self.reset()
 
         elif self.c_vid in arrived_list:
             print("successful arrival!")
             self.done = True
             self.cur_reward = 1
+            next_state = self.reset()
         else:
             self.cur_reward = -0.01
+            next_state = self.state(self.vehicle_domain)
 
-        if not self.done:
-            # 实际速度上比goal speed少了0.4m/s是对的，getSpeed函数只能获得上一时间点的速度
-            print "audi L3 speed at last step:", self.vehicle_domain.getSpeed(self.c_vid)
 
-            self.cur_state = self.state(self.vehicle_domain)
-
-        else:
-            self.cur_state = np.ones((6,11,3))
-
-        return self.cur_state,self.cur_reward,self.done,self.accident,steps
+        return next_state,self.cur_reward,self.done,self.accident,steps
 
     
 

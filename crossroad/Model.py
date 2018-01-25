@@ -19,7 +19,8 @@ class DQN_for_CROSS:
         self.env = env
         self.memory = list()
 
-
+        self.action_size = 5
+        self.input_dim = 150*500*1
         self.mini_batch_size = 50
         self.gamma = 0.9
         self.learning_rate = 0.0001
@@ -31,10 +32,10 @@ class DQN_for_CROSS:
     def create_model(self):
 
         model = Sequential()
-        model.add(Dense(100,input_dim=6*11*3,activation='relu'))
+        model.add(Dense(100,input_dim=self.input_dim,activation='relu'))
         model.add(Dense(100,activation='relu'))
         model.add(Dense(100,activation='relu'))
-        model.add(Dense(12,activation='linear'))
+        model.add(Dense(self.action_size,activation='linear'))
         model.compile(loss='mse',optimizer = optimizers.RMSprop(lr=self.learning_rate))
         self.model = model
 
