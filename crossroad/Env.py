@@ -45,6 +45,8 @@ class Intersaction:
         self.arrivalPos = "20"
         self.DrivingRoute = "cross"
 
+        
+
         self.cur_state = None
         self.cur_reward = None
 
