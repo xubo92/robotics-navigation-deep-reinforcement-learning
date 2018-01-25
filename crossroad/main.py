@@ -24,7 +24,6 @@ if __name__ == '__main__':
         traci.simulationStep()
         Intersac.state(Intersac.vehicle_domain)
     '''
-
     DQN = DQN_for_CROSS(Intersac)
     episode_num = 100000
     ep_idx = 0

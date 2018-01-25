@@ -14,7 +14,6 @@ class action_space:
         if not action_num:
             print "dimisition size should not be 0"
         else:
-
             self.action_idx = np.arange(action_num)
 
     def sample(self):
@@ -45,7 +44,7 @@ class Intersaction:
         self.arrivalPos = "20"
         self.DrivingRoute = "cross"
 
-        
+
 
         self.cur_state = None
         self.cur_reward = None
