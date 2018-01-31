@@ -19,6 +19,7 @@ class DQN_for_CROSS:
         self.env = env
         self.memory = list()
 
+        
         self.action_size = 5
         self.input_dim = 150*500*1
         self.mini_batch_size = 50
